@@ -18,13 +18,14 @@ let listaAmigos;
 let tamanho = 10;
 
 function adicionarAmigo() {
-    let nome = document.querySelector('input').value;
-    if (!nome || nomes.includes(nome)){
+    let nome = document.querySelector('input');
+    if (!nome.value || nomes.includes(nome.value)){
         alert(`Você precisa adicionar um nome válido`);
     } else{
-        nomes.push(nome);
+        nomes.push(nome.value);
         listaAmigos = document.querySelector('#listaAmigos');
-        listaAmigos.innerHTML = nomes.map(nome => `${nome}`).join('<br>');
+        listaAmigos.innerHTML = nomes.map(nome => `<li>${nome}<li>`).join('');
+        nome.value = '';
     }
     if(nomes.length > tamanho){
         tamanho*10;
@@ -33,12 +34,16 @@ function adicionarAmigo() {
 }
 
 function sortearAmigo(){
-    let sorteio = parseInt(Math.random() * tamanho);
-    let sorteado = nomes.at(sorteio);
-    if(sorteado == 'undefined' || sorteado == null){
-        return sortearAmigo();
-    }else {
-        listaAmigos = document.querySelector('#resultado');
-        listaAmigos.innerHTML = sorteado.toString();
+    if(nomes.length == 0){
+        alert(`Você precisa adicionar nomes para sortear`);
+    } else{
+        let sorteio = parseInt(Math.random() * tamanho);
+        let sorteado = nomes.at(sorteio);
+        if(sorteado == 'undefined' || sorteado == null){
+            return sortearAmigo();
+        }else {
+            listaAmigos = document.querySelector('#resultado');
+            listaAmigos.innerHTML = sorteado.toString();
+        }
     }
 }
